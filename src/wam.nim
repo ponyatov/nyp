@@ -4,12 +4,21 @@
 ## Hassan Ait-Kaci
 ## http://wambook.sourceforge.net/wambook.pdf
 
-type WAM = ref object
-  functor: string
-  term: seq[WAM]
+type Term* = ref object of RootObj
+  ## p.24 (first-order) term
 
-proc `$`(self: WAM): string =
+type Variable* = ref object of Term
+
+type Constant* = ref object of Term
+
+type Structure* = ref object of Term
+  functor: string      ## functor
+  term: seq[Structure] ## subterms
+
+proc `$`*(self: Structure): string =
+  ## print term
   result = self.functor & "("
+  for i in self.term: result &= $i
   result &= ")"
 
-echo WAM(functor: "hello", term: @[])
+echo Structure(functor: "hello", term: @[Structure(functor: "x")])
