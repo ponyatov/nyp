@@ -37,7 +37,7 @@ nyp wam: $(SRC) $(MODULE).nimble src/nim.cfg Makefile
 
 .PHONY: docs
 docs:
-	cd $@ ; find ../src -regex .+.nim$$ | xargs -n1 -P0 nim doc
+	cd $@ ; find ../src -regex ".+.nim$$" | xargs -n1 -P0 nim doc
 
 
 
