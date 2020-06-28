@@ -1,11 +1,11 @@
 # Package
 
 version       = "0.1.0"
-author        = "Dmitry Ponyatov"
+author        = "Dmitry Ponyatov <dponyatov@gmail.com>"
 description   = "Nim Yield Prolog"
 license       = "MIT"
 srcDir        = "src"
-bin           = @["nyp"]
+bin           = @["nyp","wam"]
 
 
 

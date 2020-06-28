@@ -20,19 +20,24 @@ WGET = wget -c --no-check-certificate
 
 .PHONY: all py test
 
-all: py nm
+all: nm
 
 py: $(PY) $(MODULE).py $(MODULE).ini
 	$^
 
-nm: $(MODULE) $(MODULE).py $(MODULE).ini
+nm: wam $(MODULE).py $(MODULE).ini
 	./$^
 
 SRC  = src/$(MODULE).nim
+SRC += src/wam.nim
 
-$(MODULE): $(SRC) $(MODULE).nimble Makefile
+nyp wam: $(SRC) $(MODULE).nimble src/nim.cfg Makefile
 	echo $(SRC) | xargs -n1 -P0 nimpretty --indent:2
 	nimble --cc:tcc build
+
+.PHONY: docs
+docs:
+	cd $@ ; find ../src -regex .+.nim$$ | xargs -n1 -P0 nim doc
 
 
 
@@ -74,7 +79,7 @@ Linux_install Linux_update:
 
 MERGE  = Makefile README.md .gitignore .vscode apt.txt requirements.txt
 MERGE += $(MODULE).py $(MODULE).ini
-MERGE += $(MODULE).nimble src
+MERGE += $(MODULE).nimble src docs
 
 master:
 	git checkout $@
